@@ -1,0 +1,91 @@
+configuration {
+  modi: "drun";
+  show-icons: true;
+  icon-theme: "Papirus-Dark";
+  display-drun: "";
+  drun-display-format: "{name}";
+  disable-history: false;
+  sort: true;
+  sorting-method: "normal";
+}
+
+* {
+  bg-glass: #B314141E;
+  bg-input: #22FFFFFF;
+  bg-sel:   #40C678DD;
+  fg-main:  #E6E9EF;
+  fg-muted: #7F849C;
+  accent:   #C678DD;
+  border:   #2EFFFFFF;
+  font:     "JetBrainsMono Nerd Font 9";
+
+  background-color: transparent;
+  text-color:       @fg-main;
+}
+
+window {
+  location:          center;
+  anchor:            center;
+  width:             340px;
+  background-color:  @bg-glass;
+  border:            1px solid;
+  border-color:      @border;
+  border-radius:     16px;
+  padding:           10px;
+}
+
+mainbox {
+  spacing:  8px;
+  children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+  background-color: @bg-input;
+  border:           1px solid;
+  border-color:     @accent;
+  border-radius:    10px;
+  padding:          6px 10px;
+  spacing:          8px;
+  children:         [ "prompt", "entry" ];
+}
+
+prompt {
+  text-color: @accent;
+}
+
+entry {
+  placeholder:       "Search...";
+  placeholder-color: @fg-muted;
+}
+
+listview {
+  lines:        6;
+  columns:      1;
+  fixed-height: false;
+  spacing:      3px;
+  scrollbar:    false;
+}
+
+element {
+  padding:       5px 8px;
+  border-radius: 8px;
+  spacing:       8px;
+}
+
+element normal.normal, element alternate.normal {
+  background-color: transparent;
+  text-color:       @fg-main;
+}
+
+element selected.normal {
+  background-color: @bg-sel;
+  text-color:       #FFFFFF;
+}
+
+element-icon {
+  size: 16px;
+}
+
+element-text {
+  vertical-align: 0.5;
+}
