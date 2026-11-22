@@ -1,0 +1,1 @@
+bspwm sxhkd polybar rofi picom kitty feh brightnessctl fish nemo
