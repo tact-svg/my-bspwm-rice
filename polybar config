@@ -1,62 +1,57 @@
 [colors]
-background = #CC14141E
-background-alt = #33FFFFFF
-foreground = #E6E9EF
+background = #9914141E
+foreground = #E5E9F0
 primary = #C678DD
 secondary = #61AFEF
 alert = #E06C75
-disabled = #6C7086
+disabled = #5C6370
 
-[bar/example]
-width = 98.5%
-height = 30px
-offset-x = 0.75%
-offset-y = 8px
-radius = 12
-fixed-center = true
-
+[bar/base]
+top = true
+height = 22pt
+radius = 11
 background = ${colors.background}
 foreground = ${colors.foreground}
-
-line-size = 2pt
 border-size = 1pt
-border-color = #26FFFFFF
-
-padding-left = 2
-padding-right = 2
+border-color = #33C678DD
+padding-left = 1
+padding-right = 1
 module-margin = 1
-
-font-0 = "JetBrainsMono Nerd Font:size=9;2"
-font-1 = "JetBrainsMono Nerd Font:size=8;2"
-
-modules-left = bspwm
-modules-center = date
-modules-right = backlight pulseaudio bluetooth wlan battery
-
+font-0 = "JetBrainsMono Nerd Font:size=9:weight=bold;2"
 cursor-click = pointer
-cursor-scroll = ns-resize
 enable-ipc = true
 wm-restack = bspwm
 
-[module/bspwm]
-type = internal/bspwm
-pin-workspaces = true
-enable-click = true
-enable-scroll = true
+[bar/left]
+inherit = bar/base
+width = 14%
+offset-x = 1%
+offset-y = 6pt
+modules-center = xworkspaces
 
-label-focused = 󰮯
-label-focused-foreground = ${colors.primary}
-label-focused-padding = 1
+[bar/center]
+inherit = bar/base
+width = 12%
+offset-x = 44%
+offset-y = 6pt
+modules-center = date
 
-label-occupied = 󰊠
+[bar/right]
+inherit = bar/base
+width = 21%
+offset-x = 78%
+offset-y = 6pt
+modules-center = backlight pulseaudio bluetooth wlan battery power
+
+[module/xworkspaces]
+type = internal/xworkspaces
+label-active = 
+label-active-foreground = ${colors.primary}
+label-active-padding = 1
+label-occupied = 
 label-occupied-foreground = ${colors.secondary}
 label-occupied-padding = 1
-
-label-urgent = 
-label-urgent-foreground = ${colors.alert}
-label-urgent-padding = 1
-
-label-empty = 
+label-empty = 
 label-empty-foreground = ${colors.disabled}
 label-empty-padding = 1
 
@@ -69,70 +64,75 @@ label-foreground = ${colors.foreground}
 
 [module/backlight]
 type = internal/backlight
+card = amdgpu_bl1
 use-actual-brightness = true
-enable-scroll = true
-scroll-interval = 5
-format = <ramp> <label>
-label = %percentage%%
-ramp-0 = 󰃞
-ramp-1 = 󰃟
-ramp-2 = 󰃠
-ramp-foreground = #E5C07B
+format = <label>
+label = 󰃠 %percentage%%
+label-foreground = ${colors.foreground}
 
 [module/pulseaudio]
 type = internal/pulseaudio
-use-ui-max = false
-interval = 5
 format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage%%
-label-muted = 󰖁 Muted
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.secondary}
+label-muted = 󰖁 muted
 label-muted-foreground = ${colors.disabled}
-ramp-volume-0 = 󰕿
-ramp-volume-1 = 󰖀
-ramp-volume-2 = 󰕾
-ramp-volume-foreground = #98C379
-click-right = pavucontrol &
 
 [module/bluetooth]
 type = custom/script
-exec = bluetoothctl show | grep -q "Powered: yes" && echo "󰂯 On" || echo "󰂲 Off"
-interval = 3
+exec = bluetoothctl show | grep -q "Powered: yes" && echo "󰂯" || echo "󰂲"
+interval = 5
 click-left = blueman-manager &
-click-right = bluetoothctl power toggle
-format-foreground = #61AFEF
+format-foreground = ${colors.secondary}
 
 [module/wlan]
+label-connected-padding = 1
+label-disconnected-padding = 1
 type = internal/network
 interface-type = wireless
-interval = 3
-format-connected = %{A1:nm-connection-editor &:}󰤨%{A}
-format-connected-foreground = #56B6C2
-format-disconnected = %{A1:nm-connection-editor &:}󰤭%{A}
-format-disconnected-foreground = ${colors.disabled}
+interval = 5
+format-connected = <label-connected>
+label-connected = %{A1:nm-connection-editor &:}%{A}
+label-connected-foreground = ${colors.secondary}
+format-disconnected = <label-disconnected>
+label-disconnected = %{A1:nm-connection-editor &:}󰖪%{A}
+label-disconnected-foreground = ${colors.disabled}
 
 [module/battery]
 type = internal/battery
 full-at = 99
-low-at = 15
 battery = BAT0
 adapter = ADP1
 poll-interval = 5
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
-format-full = 󰁹 <label-full>
 label-charging = %percentage%%
 label-discharging = %percentage%%
-label-full = %percentage%%
+label-full = 󰁹 100%
+label-full-foreground = ${colors.primary}
 ramp-capacity-0 = 󰂎
-ramp-capacity-1 = 󰁺
-ramp-capacity-2 = 󰁼
-ramp-capacity-3 = 󰁾
-ramp-capacity-4 = 󰂀
-ramp-capacity-5 = 󰁹
-ramp-capacity-foreground = #E06C75
+ramp-capacity-1 = 󰁼
+ramp-capacity-2 = 󰁾
+ramp-capacity-3 = 󰂀
+ramp-capacity-4 = 󰁹
+ramp-capacity-foreground = ${colors.primary}
 animation-charging-0 = 󰂆
 animation-charging-1 = 󰂈
 animation-charging-2 = 󰂊
 animation-charging-3 = 󰂅
-animation-charging-foreground = #98C379
+animation-charging-foreground = ${colors.primary}
 animation-charging-framerate = 750
+
+[module/power]
+type = custom/text
+content = "⏻"
+content-foreground = #E06C75
+content-padding = 1
+click-left = ~/.config/polybar/powermenu.sh
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = false
